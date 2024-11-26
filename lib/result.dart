@@ -8,6 +8,11 @@ class Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final bmi = arg['bmi'];
+    final result = arg['result'];
+    final interpretation = arg['interpretation'];
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -26,7 +31,7 @@ class Result extends StatelessWidget {
               ),
             ),
           ),
-          const Expanded(
+          Expanded(
             flex: 5,
             child: NewWidget(
               widget: Center(
@@ -34,10 +39,10 @@ class Result extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Text(
-                        'Normal',
-                        style: TextStyle(
+                        result,
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 12, 211, 121),
@@ -46,14 +51,14 @@ class Result extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '18.3',
-                      style: TextStyle(
+                      bmi.toString(),
+                      style: const TextStyle(
                         fontSize: 100,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      'You have a normal body weight.\n Good job!',
+                      interpretation,
                       style: kstringStyle,
                       textAlign: TextAlign.center,
                     ),

@@ -1,3 +1,5 @@
+// ignore: file_names
+import 'Calculation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon.dart';
@@ -82,26 +84,30 @@ class _BmiState extends State<Bmi> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Center(
-                      child: Text(
-                        'Height',
-                        style: kstringStyle,
-                      ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        Text(
-                          _startValue.toString(),
-                          style: kWordStyle,
-                        ),
-                        const Text(
-                          'cm',
+                    const Expanded(
+                      child: Center(
+                        child: Text(
+                          'Height',
                           style: kstringStyle,
                         ),
-                      ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Text(
+                            _startValue.toString(),
+                            style: kWordStyle,
+                          ),
+                          const Text(
+                            'cm',
+                            style: kstringStyle,
+                          ),
+                        ],
+                      ),
                     ),
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
@@ -223,7 +229,14 @@ class _BmiState extends State<Bmi> {
             ButtomButton(
               Data: 'CALCULATE',
               onPressed: () {
-                Navigator.pushNamed(context, '/result');
+                Calculation calc =
+                    Calculation(height: _startValue, weight: _startWeight);
+
+                Navigator.pushNamed(context, '/result', arguments: {
+                  'bmi': calc.bmi(),
+                  'result': calc.result(),
+                  'interpretation': calc.interpretation(),
+                });
               },
             ),
           ],
